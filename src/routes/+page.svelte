@@ -1,6 +1,7 @@
 <script lang='ts'>
 
-    import "../app.css"
+    import "../app.css";
+    import { base } from '$app/paths';
 
     // State to keep track of the current page
     let currentPage:string = 'home';
