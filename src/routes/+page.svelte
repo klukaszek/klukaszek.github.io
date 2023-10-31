@@ -1,6 +1,9 @@
 <script lang="ts">
-    import { base } from '$app/paths';
+    import "../app.css";
+    import { base } from "$app/paths";
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<!-- Main content area -->
+<div class="text-4xl">Welcome to My Site!</div>
+<div class="text-2xl mt-4">I am currently busy with school so I will work on it whenever I have the chance.</div>
+<div class="text-1xl mt-4">This GitHub Pages site is being built using SvelteKit and Tailwind CSS!</div>
