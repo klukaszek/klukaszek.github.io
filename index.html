@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyle Lukaszek - Portfolio & Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="content">
+        <!-- Content will be loaded here dynamically -->
+        <main id="main-content">
+        </main>
+    </div>
+
+    <!-- NVIM status bar -->
+    <footer id="status-bar">
+        <div class="left-section">
+            <span id="mode" class="mode-block">HOME</span>
+            <span id="file-info">home.html</span>
+            <span id="file-type">html</span>
+        </div>
+        <div class="right-section">
+            <span id="note"><strong>(:q = return to last page | ESC = return home)</strong></span>
+            <span id="encoding">utf-8</span>
+            <span id="percentage">100%</span>
+            <span id="line-col" class="line-col-block">0:1</span>
+        </div>
+    </footer>
+
+    <!-- Command input -->
+    <div id="command-input" style="display: none;">
+        <span>:</span><input type="text" id="command-text" autofocus>
+    </div>
+
+    <!-- Script to load content dynamically & update status bar -->
+    <script src="script.js"></script>
+</body>
+
+</html>

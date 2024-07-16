@@ -1,0 +1,365 @@
+:root {
+    --bg: #1e1e2e;
+    --fg: #cdd6f4;
+    --accent: #f5c2e7;
+    --subtle: #313244;
+    --mode-bg: #a6e3a1;
+    --mode-fg: #1e1e2e;
+    --line-col-bg: #89b4fa;
+    --line-col-fg: #1e1e2e;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    background-color: var(--bg);
+    color: var(--fg);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+h1,
+a {
+    color: var(--accent);
+}
+
+/* Styling for the navigation section */
+/* ---------------------------------------------------------- */
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+nav ul li {
+    margin-bottom: 10px;
+}
+
+/* Styling for the status bar */
+/* ---------------------------------------------------------- */
+
+#status-bar {
+    background-color: var(--subtle);
+    color: var(--fg);
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.left-section,
+.right-section {
+    display: flex;
+    align-items: center;
+}
+
+#status-bar span {
+    padding: 2px 8px;
+}
+
+.mode-block {
+    background-color: var(--mode-bg);
+    color: var(--mode-fg);
+    font-weight: bold;
+}
+
+.line-col-block {
+    background-color: var(--line-col-bg);
+    color: var(--line-col-fg);
+    font-weight: bold;
+}
+
+/* ---------------------------------------------------------- */
+
+/* Styling for the links / commands */
+/* ---------------------------------------------------------- */
+a,
+.command {
+    color: var(--accent);
+    text-decoration: none;
+    /* Remove default underline */
+    position: relative;
+    /* For custom underline effect */
+    cursor: pointer;
+    /* Change cursor to indicate clickable */
+}
+
+/* Custom underline effect on hover */
+a::after,
+.command::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+a:hover::after,
+.command:hover::after {
+    transform: scaleX(1);
+}
+
+/* Always show underline for keyboard navigation */
+a:focus,
+.command:focus {
+    outline: none;
+    /* Remove default focus outline */
+}
+
+a:focus::after,
+.command:focus::after {
+    transform: scaleX(1);
+}
+
+.command {
+    display: inline-block;
+}
+
+/* ---------------------------------------------- */
+
+/* Styling for the main content */
+/* ---------------------------------------------- */
+#main-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#main-content ul li {
+    margin-bottom: 10px;
+}
+
+#main-content a {
+    color: var(--accent);
+    text-decoration: none;
+    position: relative;
+}
+
+#main-content a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+#main-content a:hover::after,
+#main-content a:focus::after {
+    transform: scaleX(1);
+}
+
+/* --------------------------------------------------- */
+
+/* Styling for the command input */
+/* --------------------------------------------------- */
+#command-input {
+    position: fixed;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    background-color: var(--bg);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#command-input span {
+    color: var(--accent);
+    margin-right: 5px;
+}
+
+#command-input input {
+    background-color: var(--bg);
+    color: var(--fg);
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-family: monospace;
+}
+
+/* ----------------------------------------------- */
+
+/* Styles for about me section */
+/* ----------------------------------------------- */
+.about-content,
+.blog-content,
+.projects-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+
+/* About page styles */
+.about-content h3 {
+    color: var(--accent);
+    margin-top: 20px;
+}
+
+.about-content ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.about-content ul li::before {
+    content: "•";
+    color: var(--accent);
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.about-content .about-list {
+    margin-top: 5px;
+    margin-left: 2em;
+    margin-bottom: 2px;
+}
+
+.about-content li {
+    margin-top: 10px;
+    margin-left: 1em;
+    margin-bottom: 5px;
+}
+
+/* ---------------------------------------------------- */
+
+/* Blog page styles */
+/* ---------------------------------------------------- */
+.blog-post {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--subtle);
+    padding-bottom: 20px;
+}
+
+.blog-post:last-child {
+    border-bottom: none;
+}
+
+.blog-post h3 {
+    color: var(--accent);
+}
+
+.post-meta {
+    font-size: 0.9em;
+    color: var(--fg);
+    opacity: 0.7;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--accent);
+    text-decoration: none;
+    position: relative;
+}
+
+.read-more::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.read-more:hover::after {
+    transform: scaleX(1);
+}
+
+/* ---------------------------------------------------- */
+
+/* Projects page styles */
+/* ---------------------------------------------------- */
+.project {
+    margin-bottom: 30px;
+    border: 1px solid var(--subtle);
+    border-radius: 5px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.project:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+}
+
+.project h3 {
+    color: var(--accent);
+    margin-top: 0;
+}
+
+.project p {
+    margin: 10px 0;
+}
+
+.project a {
+    color: var(--accent);
+    text-decoration: none;
+    position: relative;
+}
+
+.project a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.project a:hover::after {
+    transform: scaleX(1);
+}
+
+/* ---------------------------------------------------- */
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+
+    .about-content,
+    .blog-content,
+    .projects-content {
+        padding: 10px;
+    }
+
+    .project {
+        padding: 15px;
+    }
+}
