@@ -3,6 +3,10 @@
 var lastCommand = '';
 var currentCommand = '';
 
+// Create a stack to store the history of commands
+var pageHistory = [];
+var pageIndex = -1;
+
 // Dictionary of valid input commands and their corresponding output commands
 const commands = {
     // Main commands
@@ -49,9 +53,41 @@ function loadContent(page) {
         window.open('https://twitter.com/kylelukaszek', '_blank');
         return;
     } else if (x === 'return') {
-        if (lastCommand === '') lastCommand = 'home';
-        loadContent(lastCommand);
+        // Handle the page history and return arrow for mobile, etc.
+        if (pageIndex > 0) {
+            const previousCommand = pageHistory[pageIndex - 1];
+            pageHistory.pop();
+            pageIndex = pageHistory.length - 1;
+            console.log(pageHistory);
+            loadContent(previousCommand);
+        }
         return;
+    }
+    
+    // Handle the page history and return arrow for mobile, etc.
+    if (x === 'home') {
+        // Remove return arrow from home page
+        const returnArrow = document.getElementById('mobile-return');
+        if (returnArrow) {
+            returnArrow.style.display = 'none';
+        }
+        // clear the page history
+        pageHistory = [];
+        pageIndex = -1;
+    } else {
+        // Add return arrow to all other pages
+        const returnArrow = document.getElementById('mobile-return');
+        if (returnArrow) {
+            returnArrow.style.display = 'block';
+        }
+    }
+
+    // Check if the current page is the last page in the history stack
+    if (pageHistory[pageIndex] !== page) {
+        // Add the command to the history stack
+        pageHistory.push(page);
+        pageIndex = pageHistory.length - 1;
+        console.log(pageHistory);
     }
 
     // Update status bar
@@ -74,6 +110,19 @@ function loadContent(page) {
             updateScrollPercentage();
         });
 }
+
+// Return arrow for mobile or people who don't know how to use the commands
+// -------------------------------------------------
+document.getElementById('mobile-return').addEventListener('click', function() {
+    loadContent('return');
+});
+
+document.getElementById('mobile-return').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        loadContent('return');
+    }
+});
 
 // Command Input Methods
 // -------------------------------------------------
