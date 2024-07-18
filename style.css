@@ -396,7 +396,102 @@ a:focus::after,
 
 /* ---------------------------------------------------- */
 
-/* Styles for mobile devices */
+/* Styles for work experience section */
+/* Work Experience Styles */
+.work-experience {
+    margin-bottom: 40px;
+}
+
+.job {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.job:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.job h3 {
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.job h4 {
+    color: var(--fg);
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.job-duration {
+    font-style: italic;
+    color: var(--fg);
+    opacity: 0.7;
+    margin-bottom: 10px;
+}
+
+.job ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.job ul li {
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.job ul li::before {
+    content: "•";
+    color: var(--accent);
+    position: absolute;
+    left: 0;
+}
+
+/* ---------------------------------------------------- */
+
+/* Related Skills Styles */
+/* ---------------------------------------------------- */
+.related-skills {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--subtle);
+}
+
+.related-skills h5 {
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.related-skills ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 0;
+}
+
+.related-skills ul li {
+    background-color: var(--subtle);
+    color: var(--fg);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+}
+
+.related-skills ul li::before {
+    content: none;
+}
+
+/* Adjust existing job styles */
+.job ul:not(.related-skills ul) {
+    margin-bottom: 0;
+}
+
+/* ---------------------------------------------------- */
+
+/* Style adjustments for mobile devices */
 @media (max-width: 768px) {
 
     .about-content,
@@ -410,7 +505,7 @@ a:focus::after,
     }
 
     #status-bar {
-        font-size: 0.8em;
+        font-size: 0.6em;
     }
 
     #content {
