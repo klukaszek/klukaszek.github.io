@@ -347,9 +347,9 @@ a:focus::after,
 
 /* ---------------------------------------------------- */
 
-/* Projects page styles */
+/* Shared styles for projects and jobs */
 /* ---------------------------------------------------- */
-.project {
+.content-card {
     margin-bottom: 30px;
     border: 1px solid var(--subtle);
     border-radius: 5px;
@@ -358,27 +358,34 @@ a:focus::after,
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.project:hover {
+.content-card:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: var(--accent);
 }
 
-.project h3 {
+.content-card h3 {
     color: var(--accent);
     margin-top: 0;
+    margin-bottom: 5px;
 }
 
-.project p {
+.content-card h4 {
+    color: var(--fg);
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.content-card p {
     margin: 10px 0;
 }
 
-.project a {
+.content-card a {
     color: var(--accent);
     text-decoration: none;
     position: relative;
 }
 
-.project a::after {
+.content-card a::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -390,60 +397,34 @@ a:focus::after,
     transition: transform 0.3s ease-in-out;
 }
 
-.project a:hover::after {
+.content-card a:hover::after {
     transform: scaleX(1);
 }
 
 /* ---------------------------------------------------- */
 
-/* Styles for work experience section */
-/* Work Experience Styles */
-.work-experience {
-    margin-bottom: 40px;
-}
-
-.job {
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.job:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.job h3 {
-    color: var(--accent);
-    margin-bottom: 5px;
-}
-
-.job h4 {
-    color: var(--fg);
-    margin-top: 0;
-    margin-bottom: 5px;
-}
-
-.job-duration {
+/* Specific styles for jobs */
+/* ---------------------------------------------------- */
+.job .job-duration {
     font-style: italic;
     color: var(--fg);
     opacity: 0.7;
     margin-bottom: 10px;
 }
 
-.job ul {
+.job > ul:not(.related-skills ul) {
     list-style-type: none;
     padding-left: 0;
+    margin-bottom: 15px;
 }
 
-.job ul li {
+.job > ul:not(.related-skills ul) li {
     margin-bottom: 5px;
     position: relative;
     padding-left: 20px;
 }
 
-.job ul li::before {
+.job > ul:not(.related-skills ul) li::before {
     content: "•";
     color: var(--accent);
     position: absolute;
@@ -455,8 +436,8 @@ a:focus::after,
 /* Related Skills Styles */
 /* ---------------------------------------------------- */
 .related-skills {
-    margin-top: 15px;
-    padding-top: 15px;
+    margin-top: 5px;
+    padding-top: 5px;
     border-top: 1px solid var(--subtle);
 }
 
@@ -468,7 +449,7 @@ a:focus::after,
 .related-skills ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 5px;
     padding-left: 0;
 }
 
@@ -483,12 +464,6 @@ a:focus::after,
 .related-skills ul li::before {
     content: none;
 }
-
-/* Adjust existing job styles */
-.job ul:not(.related-skills ul) {
-    margin-bottom: 0;
-}
-
 /* ---------------------------------------------------- */
 
 /* Style adjustments for mobile devices */
