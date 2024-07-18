@@ -21,6 +21,10 @@ html {
     flex-direction: column;
 }
 
+html {
+    overflow-y: visible;
+}
+
 #content {
     flex-grow: 1;
     display: flex;
@@ -392,8 +396,8 @@ a:focus::after,
 
 /* ---------------------------------------------------- */
 
-/* Responsive design for smaller screens */
-@media (max-width: 600px) {
+/* Styles for mobile devices */
+@media (max-width: 768px) {
 
     .about-content,
     .blog-content,
@@ -403,5 +407,13 @@ a:focus::after,
 
     .project {
         padding: 15px;
+    }
+
+    #status-bar {
+        font-size: 0.8em;
+    }
+
+    #content {
+        padding: 20px;
     }
 }
