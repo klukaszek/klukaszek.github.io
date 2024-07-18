@@ -496,6 +496,9 @@ a:focus::after,
 
     .about-content,
     .blog-content,
+    .work-experience,
+    .job,
+    .related-skills,
     .projects-content {
         padding: 10px;
     }
