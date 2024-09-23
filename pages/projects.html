@@ -87,16 +87,69 @@
     <h1> Personal Projects </h1>
 
     <div class="project content-card">
+
+        <h3>SDL3GPU WebGPU Backend</h3>
+        <p>
+            SDL3GPU is the new graphics API for SDL3. It is designed to be a modern, easy-to-use, and
+            high-performance graphics API for C and C++ developers. SDL3GPU is built on top of Vulkan,
+            Metal, and Direct3D 12. I am working on porting the Vulkan backend fucntionality over to
+            WebGPU so that SDL3 can target the web as well. This will allow for SDL3 applications to
+            be run on nearly any device with a web browser. This project is still in development while
+            I am in school.
+        </p>
+        <p><a href="https://github.com/klukaszek/SDL" target="_blank"><strong>GitHub</strong></a></p>
+        <p><a href="https://github.com/klukaszek/SDL3-WebGPU-Examples" target="_blank"><strong>Testing
+                    Examples</strong></a></p>
+
+        <h5>Current Features:</h5>
+        <ul>
+            <li>Window Creation</li>
+            <li>Swapchain Creation</li>
+            <li>Shader Compilation</li>
+            <li>Render Pass Creation</li>
+            <li>Command Buffer Recording</li>
+            <li>Swapchain Presentation</li>
+        </ul>
+
+        <h5>Features in Development:</h5>
+        <ul>
+            <li>Pipeline Creation</li>
+            <li>Texture Creation</li>
+            <li>Buffer Creation</li>
+            <li>Shader Reflection</li>
+            <li>Render Pass Management</li>
+            <li>Command Buffer Management</li>
+        </ul>
+
+        <div class="related-skills">
+            <h5>Related Skills:</h5>
+            <div class="skills">
+                <ul>
+                    <li>C</li>
+                    <li>C++</li>
+                    <li>Emscripten</li>
+                    <li>Graphics Programming</li>
+                    <li>SPIR-V</li>
+                    <li>Vulkan</li>
+                    <li>WebGPU</li>
+                    <li>WGSL</li>
+                    <li>WebAssembly</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="project content-card">
         <h3>Tint-WASM</h3>
         <p>
-            Tint-WASM is a reverse engineered *as light as can be* WebAssembly runtime 
-            for Google's Tint (WGSL) compiler. It also includes access to the entirety 
-            of SPIRV-Tools so we can also target SPVASM. Currently Tint-WASM supports 
-            SPIR-V, SPIR-V ASM, and WGSL cross-compilation. Tint-WASM can be used in two 
-            different ways: as a standalone static library being used from the ground 
-            up, or the WASM module with C++ API that can be used in the browser. I plan on 
-            using Tint-WASM to help further my development of the WebGPU backend 
-            for SDL3GPU (previously Nano). This will prove very useful for shader 
+            Tint-WASM is a reverse engineered *as light as can be* WebAssembly runtime
+            for Google's Tint (WGSL) compiler. It also includes access to the entirety
+            of SPIRV-Tools so we can also target SPVASM. Currently Tint-WASM supports
+            SPIR-V, SPIR-V ASM, and WGSL cross-compilation. Tint-WASM can be used in two
+            different ways: as a standalone static library being used from the ground
+            up, or the WASM module with C++ API that can be used in the browser. I plan on
+            using Tint-WASM to help further my development of the WebGPU backend
+            for SDL3GPU (previously Nano). This will prove very useful for shader
             reflection which will be used for pipeline creation.
         </p>
         <p><a href="https://github.com/klukaszek/tint-wasm" target="_blank"><strong>GitHub</strong></a></p>
