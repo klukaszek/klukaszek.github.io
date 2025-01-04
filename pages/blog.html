@@ -1,22 +1,36 @@
 <!-- blog.html -->
-<h2>My Blog</h2>
-<div class="blog-content">
-    <article class="blog-post">
-        <h3>[Blog Post Title 1]</h3>
-        <p class="post-meta">Posted on [Date] | Tags: [tag1], [tag2]</p>
-        <p>[Brief excerpt or introduction to the blog post]</p>
-        <a href="[link to full post]" class="read-more">Read more</a>
-    </article>
-    <article class="blog-post">
-        <h3>[Blog Post Title 2]</h3>
-        <p class="post-meta">Posted on [Date] | Tags: [tag1], [tag2]</p>
-        <p>[Brief excerpt or introduction to the blog post]</p>
-        <a href="[link to full post]" class="read-more">Read more</a>
-    </article>
-    <article class="blog-post">
-        <h3>[Blog Post Title 3]</h3>
-        <p class="post-meta">Posted on [Date] | Tags: [tag1], [tag2]</p>
-        <p>[Brief excerpt or introduction to the blog post]</p>
-        <a href="[link to full post]" class="read-more">Read more</a>
-    </article>
+
+<!-- Released Content -->
+<div class="blog-content" id="released">
+    <h1>My Blog<span class="cursor">|</span></h1>
+    <h2>Released</h2>
+    <div class="content-card">
+        <h3><a href="../static/blog/Apple-Sensor-Kit.md" class="read-more">An Adventure With Apple SensorKit</a></h3>
+        <p class="post-meta">Posted on November 6th 2024 | Tags: Swift, iOS, Tooling</p>
+        <p>Using Swift + SensorKit to collect ambient light samples from iOS devices.</p>
+    </div>
+</div>
+
+<!-- Planned Content -->
+<div class="blog-content" id="planned">
+    <h2>Planned</h2>
+    <div class="content-card">
+        <h3>Hax: A Cross-Platform Zig Adventure.</h3>
+        <p class="post-meta">Coming Soon | Tags: Zig, WGPU-Native </p>
+        <p>Building a cross-platform native rendering framework using Zig and WebGPU.</p>
+    </div>
+    <div class="content-card">
+        <h3>Completing Half of SDL3's WebGPU API</h3>
+        <p class="post-meta">Coming Soon | Tags: C, Open Source </p>
+        <p>A recap + some insights into the development of the first half of the SDL3 WebGPU driver.</p>
+    </div>
+</div>
+
+<!-- Markdown Modal -->
+<div id="markdown-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div id="markdown-content"></div>
+        <div id="loading-spinner"></div>
+    </div>
 </div>

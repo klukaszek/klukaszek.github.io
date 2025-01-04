@@ -1,12 +1,20 @@
 :root {
-    --bg: #1e1e2e;
-    --fg: #cdd6f4;
-    --accent: #f5c2e7;
-    --subtle: #313244;
-    --mode-bg: #a6e3a1;
-    --mode-fg: #1e1e2e;
-    --line-col-bg: #89b4fa;
-    --line-col-fg: #1e1e2e;
+    --bg: #252221;
+    /* black (nvim bg) */
+    --fg: #cdc0ad;
+    /* white */
+    --accent: #c65f5f;
+    /* red */
+    --subtle: #322f2e;
+    /* line (for lines like vertsplit) */
+    --mode-bg: #8ca589;
+    /* green */
+    --mode-fg: #252221;
+    /* black for contrast */
+    --line-col-bg: #7d92a2;
+    /* blue */
+    --line-col-fg: #cdc0ad;
+    /* white for contrast */
 }
 
 body,
@@ -44,6 +52,165 @@ h1,
 a {
     color: var(--accent);
 }
+
+/* Homepage cursor animation */
+/* ---------------------------------------------------------- */
+
+.cursor {
+    display: inline-block;
+    width: 1ch;
+    text-align: center;
+    animation: blink 1s step-start infinite;
+    margin-left: -4px;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+        /* Makes the cursor disappear */
+    }
+}
+
+/* Styling for blog */
+/* ---------------------------------------------------------- */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--bg);
+    margin: 5vh auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    color: var(--fg);
+}
+
+.close-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--accent);
+    transition: color 0.2s;
+}
+
+.close-button:hover {
+    color: var(--fg);
+}
+
+#loading-spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--subtle);
+    border-top: 4px solid var(--line-col-bg);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Markdown content styles */
+#markdown-content {
+    line-height: 1.6;
+    color: var(--fg);
+}
+
+#markdown-content h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+    color: var(--accent);
+}
+
+#markdown-content h2 {
+    font-size: 1.5em;
+    margin: 0.75em 0;
+    color: var(--accent);
+}
+
+#markdown-content h3 {
+    font-size: 1.17em;
+    margin: 0.83em 0;
+    color: var(--accent);
+}
+
+#markdown-content h4 {
+    margin: 1.12em 0;
+    color: var(--accent);
+}
+
+#markdown-content h5 {
+    font-size: 0.83em;
+    margin: 1.5em 0;
+    color: var(--accent);
+}
+
+#markdown-content h6 {
+    font-size: 0.75em;
+    margin: 1.67em 0;
+    color: var(--accent);
+}
+
+#markdown-content code {
+    background-color: var(--subtle);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    color: var(--fg);
+}
+
+#markdown-content pre {
+    background-color: var(--subtle);
+    padding: 1em;
+    overflow-x: auto;
+    border-radius: 4px;
+    color: var(--fg);
+}
+
+#markdown-content blockquote {
+    margin: 0;
+    padding-left: 1em;
+    border-left: 4px solid var(--line-col-bg);
+    color: var(--fg);
+}
+
+#markdown-content img {
+    max-width: 100%;
+    height: auto;
+}
+/* ---------------------------------------------------------- */
+
+/* Styling for the mobile return button */
+/* ---------------------------------------------------------- */
 
 #mobile-return {
     display: none;
@@ -93,7 +260,7 @@ a {
 nav ul {
     list-style-type: none;
     padding: 0;
-    text-align: left;
+    text-align: center;
 }
 
 nav ul li {
@@ -258,7 +425,6 @@ a:focus::after,
 /* Styles for about me section */
 /* ----------------------------------------------- */
 .about-content,
-.blog-content,
 .projects-content {
     max-width: 800px;
     margin: 0 auto;
@@ -297,22 +463,20 @@ a:focus::after,
     margin-bottom: 5px;
 }
 
+/* Inline "command" links in about me section next to other text instead of on a new line. This should override the command */
+.about-content a.command {
+    display: inline;
+}
+
 /* ---------------------------------------------------- */
 
 /* Blog page styles */
 /* ---------------------------------------------------- */
-.blog-post {
-    margin-bottom: 30px;
-    border-bottom: 1px solid var(--subtle);
-    padding-bottom: 20px;
-}
 
-.blog-post:last-child {
-    border-bottom: none;
-}
-
-.blog-post h3 {
-    color: var(--accent);
+.blog-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
 }
 
 .post-meta {
@@ -412,19 +576,20 @@ a:focus::after,
     margin-bottom: 10px;
 }
 
-.job > ul:not(.related-skills ul) {
+.job>ul:not(.related-skills ul) {
     list-style-type: none;
     padding-left: 0;
     margin-bottom: 15px;
 }
 
-.job > ul:not(.related-skills ul) li {
+.job>ul:not(.related-skills ul) li {
+    margin-top: 10px;
     margin-bottom: 5px;
     position: relative;
     padding-left: 20px;
 }
 
-.job > ul:not(.related-skills ul) li::before {
+.job>ul:not(.related-skills ul) li::before {
     content: "•";
     color: var(--accent);
     position: absolute;
@@ -464,6 +629,7 @@ a:focus::after,
 .related-skills ul li::before {
     content: none;
 }
+
 /* ---------------------------------------------------- */
 
 /* Style adjustments for mobile devices */

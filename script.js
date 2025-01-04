@@ -1,5 +1,7 @@
 // script.js
 
+// We imported the marked script in our index file, so we have to import it here in order to use it
+
 var lastCommand = '';
 var currentCommand = '';
 
@@ -14,7 +16,9 @@ const commands = {
     'about': 'about',
     'projects': 'projects',
     'contact': 'contact',
-    // 'blog': 'blog',
+    'blog': 'blog',
+    'work': 'jobs',
+    'jobs': 'jobs',
     'resume': 'resume',
     'github': 'github',
     'twitter': 'twitter',
@@ -24,7 +28,9 @@ const commands = {
     'a': 'about',
     'p': 'projects',
     'c': 'contact',
-    // 'b': 'blog',
+    'b': 'blog',
+    'w': 'jobs',
+    'j': 'jobs',
     'r': 'resume',
     'q': 'return',
     'gh': 'github',
@@ -32,19 +38,68 @@ const commands = {
     'x': 'twitter',
 }
 
-// Initialize with home content
-loadContent('home');
+function addEventListenersToBlog() {
+    const modal = document.getElementById('markdown-modal');
+    const modalContent = document.getElementById('markdown-content');
+    const spinner = document.getElementById('loading-spinner');
+    const closeButton = document.querySelector('.close-button');
+
+    // Close modal when clicking the close button
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside the content
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Close modal when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Handle "Read more" clicks
+    document.querySelectorAll('.read-more').forEach(link => {
+        link.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const path = e.target.getAttribute('href');
+
+            // Show modal and loading spinner
+            modal.style.display = 'block';
+            modalContent.style.display = 'none';
+            spinner.style.display = 'block';
+
+            try {
+                // Load and parse markdown
+                const response = await window.fetch(path).then(res => res.text());
+                const htmlContent = marked.parse(response);
+                modalContent.innerHTML = htmlContent;
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+                modalContent.innerHTML = '<p style="color: #ff0000;">Error loading content</p>';
+            } finally {
+                // Hide spinner and show content
+                spinner.style.display = 'none';
+                modalContent.style.display = 'block';
+            }
+        });
+    });
+}
 
 // Load content from the corresponding HTML file and update the status bar
 function loadContent(page) {
     const mainContent = document.getElementById('main-content');
-    const statusBar = document.getElementById('status-bar');
 
     let x = `${page}`.toLowerCase();
 
     // Handle a few special cases first
     if (x === 'resume') {
-        window.open('./resume.pdf', '_blank');
+        window.open('./static/pdfs/resume.pdf', '_blank');
         return;
     } else if (x === 'github') {
         window.open('https://github.com/klukaszek/', '_blank');
@@ -58,12 +113,12 @@ function loadContent(page) {
             const previousCommand = pageHistory[pageIndex - 1];
             pageHistory.pop();
             pageIndex = pageHistory.length - 1;
-            console.log(pageHistory);
+            //console.log(pageHistory);
             loadContent(previousCommand);
         }
         return;
     }
-    
+
     // Handle the page history and return arrow for mobile, etc.
     if (x === 'home') {
         // Remove return arrow from home page
@@ -87,7 +142,7 @@ function loadContent(page) {
         // Add the command to the history stack
         pageHistory.push(page);
         pageIndex = pageHistory.length - 1;
-        console.log(pageHistory);
+        //console.log(pageHistory);
     }
 
     // Update status bar
@@ -101,6 +156,7 @@ function loadContent(page) {
         .then(html => {
             mainContent.innerHTML = html;
             addEventListenersToCommands();
+            if (x === 'blog') addEventListenersToBlog();
             lastCommand = currentCommand;
             currentCommand = `${page}`;
             updateScrollPercentage();
@@ -237,3 +293,6 @@ window.addEventListener('resize', updateScrollPercentage);
 
 // Initialize the scroll percentage
 updateScrollPercentage();
+
+// Initialize with home content
+loadContent('home');
