@@ -9,7 +9,7 @@ window.mobileCheck = function() {
 };
 
 if (window.mobileCheck()) {
-    PARTICLE_COUNT = 100000;
+    PARTICLE_COUNT = 1000000;
 }
 
 const WORKGROUP_SIZE = 256;
