@@ -1,5 +1,5 @@
 // Constants for particle system
-var PARTICLE_COUNT = 4000000;
+var PARTICLE_COUNT = 1000000;
 
 // Check if mobile
 window.mobileCheck = function() {
@@ -259,7 +259,7 @@ async function initWebGPU() {
     // Render function
     function render() {
         const now = performance.now();
-        const deltaTime = Math.min((now - lastTime) / 1000, 0.1); // Cap at 0.1 seconds
+        const deltaTime = (now - lastTime) / 1000;
         lastTime = now;
 
         // Update uniform buffer with mouse position and delta time
