@@ -1,5 +1,13 @@
 // Constants for particle system
-const PARTICLE_COUNT = 4000000;
+var PARTICLE_COUNT = 4000000;
+
+// Check if mobile
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+if (isMobile) {
+    PARTICLE_COUNT = 100000;
+}
+
 const WORKGROUP_SIZE = 256;
 
 // Create and setup canvas
