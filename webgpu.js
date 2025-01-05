@@ -1,5 +1,5 @@
 // Constants for particle system
-var PARTICLE_COUNT = 1000000;
+var PARTICLE_COUNT = 4000000;
 
 // Check if mobile
 window.mobileCheck = function() {
