@@ -5,8 +5,8 @@ class ParticleSystem {
 
     constructor() {
         // Constants
-        this.WORKGROUP_SIZE = 256;
-        this.PARTICLE_COUNT = 4000000;
+        this.WORKGROUP_SIZE = window.mobileCheck() ? 128 : 256;
+        this.PARTICLE_COUNT = window.mobileCheck() ? 1000000 : 4000000;
 
         // State
         this.isRunning = false;
