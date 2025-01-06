@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kyle Lukaszek - Portfolio & Blog</title>
+    <meta name="description" content="Things I've done. WebGPU recommended.">
+    <meta name="keywords" content="C, Zig, HTML, CSS, JS, TS, WebGPU, Swift, iOS, SDL3, Open Source">
+    <meta name="author" content="Kyle Lukaszek">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 
     <!-- Open Graph -->
@@ -25,12 +29,21 @@
 </head>
 
 <body>
-    <button id="mobile-return" tabindex="0" aria-label="Return to previous page">&larr;</button>
     <div id="content">
         <!-- Content will be loaded here dynamically -->
         <main id="main-content">
         </main>
+        <button id="mobile-return" tabindex="0" aria-label="Return to previous page">&larr;</button>
     </div>
+
+    <!-- Command input -->
+    <div id="command-input" style="display: none;">
+        <span>:</span><input type="text" id="command-text" autofocus>
+    </div>
+
+    <!-- Load Scripts -->
+    <script src="new.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- NVIM status bar -->
     <footer id="status-bar">
@@ -47,14 +60,6 @@
         </div>
     </footer>
 
-    <!-- Command input -->
-    <div id="command-input" style="display: none;">
-        <span>:</span><input type="text" id="command-text" autofocus>
-    </div>
-
-    <!-- Load Scripts -->
-    <script src="webgpu.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="script.js"></script>
 </body>
 
