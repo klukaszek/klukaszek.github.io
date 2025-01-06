@@ -47,43 +47,6 @@ class ParticleSystem {
         const devicePixelRatio = window.devicePixelRatio || 1;
         this.canvas.width = window.innerWidth * devicePixelRatio;
         this.canvas.height = window.innerHeight * devicePixelRatio;
-
-        // Add a button to stop the animation, just use text as the button
-        const button = document.createElement('button');
-        button.style.position = 'fixed';
-        button.style.top = '10px';
-        button.style.zIndex = '3';
-        button.style.color = 'white';
-        button.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        button.style.border = 'none';
-        button.style.padding = '10px';
-        button.style.cursor = 'pointer';
-        button.style.fontFamily = 'Arial';
-        button.style.fontSize = '8px';
-        button.style.fontWeight = 'bold';
-        button.style.textTransform = 'uppercase';
-        button.style.letterSpacing = '1px';
-        button.style.outline = 'none';
-        button.style.opacity = '0.5';
-        button.style.transition = 'opacity 0.2s';
-        button.textContent = 'Stop Particles';
-        button.addEventListener('mouseover', () => button.style.opacity = '1');
-        button.addEventListener('mouseout', () => button.style.opacity = '0.5');
-        button.addEventListener('click', () => { 
-            if (this.isRunning) {
-                this.cleanup();  
-                button.textContent = 'Start Particles';
-            } else {
-                button.remove();
-                this.restart();
-            }
-        });
-
-        // move button to right side
-        button.style.left = 'auto';
-        button.style.right = '10px';
-
-        document.getElementById('content').appendChild(button);
     }
 
     async initialize() {
@@ -95,6 +58,8 @@ class ParticleSystem {
         if (!adapter) {
             throw new Error('No adapter found');
         }
+
+        this.addButton();
 
         this.device = await adapter.requestDevice();
         this.context = this.canvas.getContext('webgpu');
@@ -359,7 +324,8 @@ class ParticleSystem {
         const renderPass = commandEncoder.beginRenderPass({
             colorAttachments: [{
                 view: this.context.getCurrentTexture().createView(),
-                clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                //clearValue: { r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
+                clearValue: { r: 0.145, g: 0.13333, b: 0.1294, a: 1.0 },
                 loadOp: 'clear',
                 storeOp: 'store'
             }]
@@ -402,6 +368,45 @@ class ParticleSystem {
         this.setupCanvas();
         document.body.insertBefore(this.canvas, document.body.firstChild);
         await this.initialize();
+    }
+
+    addButton() {
+        // Add a button to start / stop webgpu, just use text as the button
+        const button = document.createElement('button');
+        button.style.position = 'fixed';
+        button.style.top = '10px';
+        button.style.zIndex = '3';
+        button.style.color = 'white';
+        button.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        button.style.border = 'none';
+        button.style.padding = '10px';
+        button.style.cursor = 'pointer';
+        button.style.fontFamily = 'Arial';
+        button.style.fontSize = '8px';
+        button.style.fontWeight = 'bold';
+        button.style.textTransform = 'uppercase';
+        button.style.letterSpacing = '1px';
+        button.style.outline = 'none';
+        button.style.opacity = '0.5';
+        button.style.transition = 'opacity 0.2s';
+        button.textContent = 'Stop Particles';
+        button.addEventListener('mouseover', () => button.style.opacity = '1');
+        button.addEventListener('mouseout', () => button.style.opacity = '0.5');
+        button.addEventListener('click', () => {
+            if (this.isRunning) {
+                this.cleanup();
+                button.textContent = 'Start Particles';
+            } else {
+                button.remove();
+                this.restart();
+            }
+        });
+
+        // move button to right side
+        button.style.left = 'auto';
+        button.style.right = '10px';
+
+        document.getElementById('content').appendChild(button);
     }
 }
 
