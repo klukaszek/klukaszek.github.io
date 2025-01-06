@@ -59,8 +59,6 @@ class ParticleSystem {
             throw new Error('No adapter found');
         }
 
-        this.addButton();
-
         this.device = await adapter.requestDevice();
         this.context = this.canvas.getContext('webgpu');
         const format = navigator.gpu.getPreferredCanvasFormat();
@@ -77,6 +75,7 @@ class ParticleSystem {
         this.setupEventListeners();
         this.isRunning = true;
         this.lastTime = performance.now();
+        this.addButton();
         this.render();
     }
 

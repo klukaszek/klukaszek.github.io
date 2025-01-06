@@ -654,14 +654,10 @@ a:focus::after,
     }
 
     #status-bar {
-        font-size: 0.6em;
+        font-size: 0.4em;
     }
 
     #content {
         padding: 20px;
-    }
-
-    #mobile-return {
-        top: 20px;
     }
 }
