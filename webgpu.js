@@ -1,6 +1,6 @@
 // Constants for particle system
 var PARTICLE_COUNT = 4000000;
-var WORKGROUP_SIZE = 256;
+const WORKGROUP_SIZE = 256;
 
 // Check if mobile
 window.mobileCheck = function() {
@@ -11,7 +11,6 @@ window.mobileCheck = function() {
 
 if (window.mobileCheck()) {
     PARTICLE_COUNT = 1000000;
-    WORKGROUP_SIZE = 128;
 }
 
 
