@@ -1,4 +1,8 @@
 class ParticleSystem {
+    isIOS() {
+        return navigator.userAgent.match(/(iPad|iPhone|iPod)/g);
+    }
+
     constructor() {
         // Constants
         this.WORKGROUP_SIZE = 256;
@@ -53,12 +57,21 @@ class ParticleSystem {
             throw new Error('WebGPU not supported');
         }
 
-        const adapter = await navigator.gpu.requestAdapter();
+        const adapter = await navigator.gpu.requestAdapter({
+            powerPreference: 'high-performance',
+            forceFallbackAdapter: false,
+        });
         if (!adapter) {
             throw new Error('No adapter found');
         }
 
         this.device = await adapter.requestDevice();
+
+        if (this.isIOS()) {
+            document.documentElement.style.webkitTouchCallout = 'none';
+            this.canvas.style.transform = 'translateZ(0)';
+        }
+
         this.context = this.canvas.getContext('webgpu');
         const format = navigator.gpu.getPreferredCanvasFormat();
 
@@ -363,6 +376,7 @@ class ParticleSystem {
         const button = document.createElement('button');
         button.style.position = 'fixed';
         button.style.top = '10px';
+        button.style.right = '10px';
         button.style.zIndex = '3';
         button.style.color = 'white';
         button.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
@@ -389,10 +403,6 @@ class ParticleSystem {
                 this.restart();
             }
         });
-
-        // move button to right side
-        button.style.left = 'auto';
-        button.style.right = '10px';
 
         document.getElementById('content').appendChild(button);
     }
