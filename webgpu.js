@@ -92,29 +92,119 @@ class ParticleSystem {
     }
 
     async initializeBuffers() {
-        // Create particle data
-        const particleBuffers = new Float32Array(this.PARTICLE_COUNT * 4);
-        for (let i = 0; i < this.PARTICLE_COUNT; i++) {
-            const baseIndex = i * 4;
-            particleBuffers[baseIndex] = Math.random() * 2 - 1;
-            particleBuffers[baseIndex + 1] = Math.random() * 2 - 1;
-            particleBuffers[baseIndex + 2] = (Math.random() - 0.5) * 0.1;
-            particleBuffers[baseIndex + 3] = (Math.random() - 0.5) * 0.1;
-        }
-
-        // Create buffers
+        // Create empty particle buffer
         this.particleBuffer = this.device.createBuffer({
-            size: particleBuffers.byteLength,
-            usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST | GPUBufferUsage.VERTEX,
-            mappedAtCreation: true,
+            size: this.PARTICLE_COUNT * 16, // 4 floats per particle
+            usage: GPUBufferUsage.STORAGE | GPUBufferUsage.VERTEX,
         });
-        new Float32Array(this.particleBuffer.getMappedRange()).set(particleBuffers);
-        this.particleBuffer.unmap();
 
+        // Create uniform buffer
         this.uniformBuffer = this.device.createBuffer({
             size: 16,
             usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
         });
+
+        // Create a buffer for random seed values
+        const seedBuffer = this.device.createBuffer({
+            size: 4, // One 32-bit value
+            usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+        });
+
+        // Write initial seed value
+        this.device.queue.writeBuffer(seedBuffer, 0, new Uint32Array([Date.now()]));
+
+        // Create initialization pipeline and bind group
+        const initShaderModule = this.device.createShaderModule({
+            code: `
+            struct Particle {
+                pos: vec2f,
+                vel: vec2f,
+            }
+
+            @group(0) @binding(0) var<storage, read_write> particles: array<Particle>;
+            @group(0) @binding(1) var<uniform> seed: u32;
+
+            // Xorshift random number generator
+            var<private> rng_state: u32;
+
+            fn rand_next() -> f32 {
+                rng_state ^= rng_state << 13u;
+                rng_state ^= rng_state >> 17u;
+                rng_state ^= rng_state << 5u;
+                return f32(rng_state) / 4294967295.0; // Normalize to [0, 1]
+            }
+
+            @compute @workgroup_size(${this.WORKGROUP_SIZE})
+            fn main(@builtin(global_invocation_id) id: vec3u) {
+                if (id.x >= ${this.PARTICLE_COUNT}u) { return; }
+
+                // Initialize RNG state for this particle
+                rng_state = seed + id.x;
+
+                // Generate random values exactly as in CPU version
+                let pos_x = rand_next() * 2.0 - 1.0;
+                let pos_y = rand_next() * 2.0 - 1.0;
+                let vel_x = (rand_next() - 0.5) * 0.1;
+                let vel_y = (rand_next() - 0.5) * 0.1;
+
+                particles[id.x] = Particle(
+                    vec2f(pos_x, pos_y),
+                    vec2f(vel_x, vel_y)
+                );
+            }
+        `
+        });
+
+        const initPipeline = this.device.createComputePipeline({
+            layout: this.device.createPipelineLayout({
+                bindGroupLayouts: [
+                    this.device.createBindGroupLayout({
+                        entries: [
+                            {
+                                binding: 0,
+                                visibility: GPUShaderStage.COMPUTE,
+                                buffer: { type: 'storage' }
+                            },
+                            {
+                                binding: 1,
+                                visibility: GPUShaderStage.COMPUTE,
+                                buffer: { type: 'uniform' }
+                            }
+                        ]
+                    })
+                ]
+            }),
+            compute: {
+                module: initShaderModule,
+                entryPoint: 'main'
+            }
+        });
+
+        const initBindGroup = this.device.createBindGroup({
+            layout: initPipeline.getBindGroupLayout(0),
+            entries: [
+                {
+                    binding: 0,
+                    resource: { buffer: this.particleBuffer }
+                },
+                {
+                    binding: 1,
+                    resource: { buffer: seedBuffer }
+                }
+            ]
+        });
+
+        // Initialize particles using compute shader
+        const commandEncoder = this.device.createCommandEncoder();
+        const computePass = commandEncoder.beginComputePass();
+        computePass.setPipeline(initPipeline);
+        computePass.setBindGroup(0, initBindGroup);
+        computePass.dispatchWorkgroups(Math.ceil(this.PARTICLE_COUNT / this.WORKGROUP_SIZE));
+        computePass.end();
+        this.device.queue.submit([commandEncoder.finish()]);
+
+        // Clean up the seed buffer as it's no longer needed
+        seedBuffer.destroy();
     }
 
     async createPipelines(format) {
