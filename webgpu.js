@@ -5,7 +5,7 @@ class ParticleSystem {
 
     constructor() {
         // Constants
-        this.WORKGROUP_SIZE = 256;
+        this.WORKGROUP_SIZE = window.mobileCheck() ? 64 : 256;
         this.PARTICLE_COUNT = window.mobileCheck() ? 1000000 : 4000000;
 
         // State
