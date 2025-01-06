@@ -92,67 +92,148 @@ class ParticleSystem {
     }
 
     async initializeBuffers() {
-        // Create empty particle buffer
         this.particleBuffer = this.device.createBuffer({
-            size: this.PARTICLE_COUNT * 16, // 4 floats per particle
+            size: this.PARTICLE_COUNT * 16,
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.VERTEX,
         });
 
-        // Create uniform buffer
         this.uniformBuffer = this.device.createBuffer({
             size: 16,
             usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
         });
 
-        // Create a buffer for random seed values
-        const seedBuffer = this.device.createBuffer({
-            size: 4, // One 32-bit value
-            usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-        });
-
-        // Write initial seed value
-        this.device.queue.writeBuffer(seedBuffer, 0, new Uint32Array([Date.now()]));
-
-        // Create initialization pipeline and bind group
         const initShaderModule = this.device.createShaderModule({
             code: `
-            struct Particle {
-                pos: vec2f,
-                vel: vec2f,
+        struct Particle {
+            pos: vec2f,
+            vel: vec2f,
+        }
+
+        @group(0) @binding(0) var<storage, read_write> particles: array<Particle>;
+
+        // Improved hash function for better randomness
+        fn hash(p: vec2f) -> f32 {
+            var p3 = fract(vec2f(p.x, p.y) * vec2f(.1031, .1030));
+            p3 += dot(p3, p3.yx + 33.33);
+            return fract((p3.x + p3.y) * p3.x);
+        }
+
+        // 2D value noise
+        fn noise(p: vec2f) -> f32 {
+            let i = floor(p);
+            let f = fract(p);
+            
+            let a = hash(i);
+            let b = hash(i + vec2f(1.0, 0.0));
+            let c = hash(i + vec2f(0.0, 1.0));
+            let d = hash(i + vec2f(1.0, 1.0));
+            
+            let u = f * f * (3.0 - 2.0 * f);
+            return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+        }
+
+        // Fractal Brownian Motion for more natural noise
+        fn fbm(p: vec2f) -> f32 {
+            let NUM_OCTAVES = 4;
+            var value = 0.0;
+            var amplitude = 0.5;
+            var frequency = 1.0;
+            
+            for(var i = 0; i < NUM_OCTAVES; i++) {
+                value += amplitude * noise(p * frequency);
+                frequency *= 2.0;
+                amplitude *= 0.5;
             }
+            return value;
+        }
 
-            @group(0) @binding(0) var<storage, read_write> particles: array<Particle>;
-            @group(0) @binding(1) var<uniform> seed: u32;
+        @compute @workgroup_size(${this.WORKGROUP_SIZE})
+        fn main(@builtin(global_invocation_id) id: vec3u) {
+            if (id.x >= ${this.PARTICLE_COUNT}u) { return; }
+            
+            let idx = f32(id.x);
+            let total = f32(${this.PARTICLE_COUNT});
+            
+            // Create multiple spiral arms
+            let arms = 5.0;
+            let particlesPerArm = total / arms;
+            let armIndex = floor(idx / particlesPerArm);
+            let posInArm = (idx % particlesPerArm) / particlesPerArm;
+            
+            // Spiral parameters
+            let angle = posInArm * 15.0 + (2.0 * 3.14159 * armIndex / arms);
+            let radius = pow(posInArm, 0.5) * 0.8;
+            
+            // Base position on spiral
+            var pos = vec2f(
+                cos(angle) * radius,
+                sin(angle) * radius
+            );
+            
+            // Add multiple layers of noise
+            let noiseTime = idx * 0.5;  // Vary noise per particle
+            let noisePos = pos;     // Scale noise frequency
 
-            // Xorshift random number generator
-            var<private> rng_state: u32;
+            // Replace the parameters with more descriptive names:
+            const positionNoiseScale = 0.1;      // Controls main position displacement
+            const spiralDistortion = 0.1;        // Controls spiral arm waviness
+            const microDetailIntensity = 0.1;    // Controls fine grain noise detail
+            const velocityTurbulence = 0.01;     // Controls velocity variation
 
-            fn rand_next() -> f32 {
-                rng_state ^= rng_state << 13u;
-                rng_state ^= rng_state >> 17u;
-                rng_state ^= rng_state << 5u;
-                return f32(rng_state) / 4294967295.0; // Normalize to [0, 1]
-            }
+            // To reduce banding, add more randomization to the velocity and position:
+            let noise1 = fbm(noisePos + vec2f(noiseTime, 0.0)) * positionNoiseScale;
+            let noise2 = fbm(noisePos * 2.0 + vec2f(0.0, noiseTime)) * spiralDistortion;
 
-            @compute @workgroup_size(${this.WORKGROUP_SIZE})
-            fn main(@builtin(global_invocation_id) id: vec3u) {
-                if (id.x >= ${this.PARTICLE_COUNT}u) { return; }
+            // Add extra noise layers at different frequencies
+            let noise3 = fbm(noisePos * 4.0 + vec2f(noiseTime * 0.7, noiseTime * 0.3)) * 0.05;
+            let noise4 = fbm(noisePos * 0.5 + vec2f(-noiseTime * 0.2, noiseTime * 0.8)) * 0.15;
 
-                // Initialize RNG state for this particle
-                rng_state = seed + id.x;
+            // Combine noise for position
+            pos += vec2f(
+                noise1 + noise2 * cos(angle) + noise3 + noise4,
+                noise1 + noise2 * sin(angle) + noise3 - noise4
+            );
+            
+            // Add micro-detail with varying frequency
+            let microNoise = (
+                fbm(noisePos * 8.0) * 0.7 + 
+                fbm(noisePos * 16.0) * 0.3
+            ) * microDetailIntensity;
+            pos += vec2f(microNoise);
+            
+            // Calculate velocity with noise-based variation
+            let tangent = vec2f(
+                -sin(angle),
+                cos(angle)
+            );
+            
+            // More varied velocity calculation
+            let speed = mix(0.02, 1.5, posInArm + noise1 + noise3);
+            var vel = tangent * speed;
 
-                // Generate random values exactly as in CPU version
-                let pos_x = rand_next() * 2.0 - 1.0;
-                let pos_y = rand_next() * 2.0 - 1.0;
-                let vel_x = (rand_next() - 0.5) * 0.1;
-                let vel_y = (rand_next() - 0.5) * 0.1;
+            // Add more complex velocity turbulence
+            let velNoise = (
+                fbm(noisePos * 3.0 + vec2f(noiseTime * 2.0)) + 
+                fbm(noisePos * 6.0 - vec2f(noiseTime)) * 0.5
+            ) * velocityTurbulence;
+            vel += vec2f(velNoise) - 0.015;
 
-                particles[id.x] = Particle(
-                    vec2f(pos_x, pos_y),
-                    vec2f(vel_x, vel_y)
-                );
-            }
-        `
+            // Add varying radial component
+            let radialStrength = noise1 - 0.5 + noise3 * 0.3;
+            let radial = normalize(pos) * speed * (0.2 + noise2 + abs(noise4));
+            vel += radial * radialStrength;
+
+            // Add rotation variation to break up straight paths
+            let rotationNoise = fbm(noisePos * 2.0 - vec2f(noiseTime * 0.5)) * 0.1;
+            let rotationMatrix = mat2x2f(
+                cos(rotationNoise), -sin(rotationNoise),
+                sin(rotationNoise), cos(rotationNoise)
+            );
+            vel = rotationMatrix * vel;
+
+            particles[id.x] = Particle(pos, vel);
+        }
+    `
         });
 
         const initPipeline = this.device.createComputePipeline({
@@ -164,11 +245,6 @@ class ParticleSystem {
                                 binding: 0,
                                 visibility: GPUShaderStage.COMPUTE,
                                 buffer: { type: 'storage' }
-                            },
-                            {
-                                binding: 1,
-                                visibility: GPUShaderStage.COMPUTE,
-                                buffer: { type: 'uniform' }
                             }
                         ]
                     })
@@ -186,15 +262,10 @@ class ParticleSystem {
                 {
                     binding: 0,
                     resource: { buffer: this.particleBuffer }
-                },
-                {
-                    binding: 1,
-                    resource: { buffer: seedBuffer }
                 }
             ]
         });
 
-        // Initialize particles using compute shader
         const commandEncoder = this.device.createCommandEncoder();
         const computePass = commandEncoder.beginComputePass();
         computePass.setPipeline(initPipeline);
@@ -202,9 +273,6 @@ class ParticleSystem {
         computePass.dispatchWorkgroups(Math.ceil(this.PARTICLE_COUNT / this.WORKGROUP_SIZE));
         computePass.end();
         this.device.queue.submit([commandEncoder.finish()]);
-
-        // Clean up the seed buffer as it's no longer needed
-        seedBuffer.destroy();
     }
 
     async createPipelines(format) {
@@ -229,13 +297,13 @@ class ParticleSystem {
                 fn computeMain(@builtin(global_invocation_id) id: vec3u) {
                     if (id.x >= ${this.PARTICLE_COUNT}u) { return; }
 
-                    let attraction = 0.1;
-                    let maxSpeed = 0.8;
+                    let attraction = 0.3;
+                    let maxSpeed = 0.5;
                     let dt = uniforms.deltaTime;
 
                     var particle = particles[id.x];
 
-                    let toMouse = uniforms.mouse - particle.pos;
+                    let toMouse = (uniforms.mouse * 0.2) - particle.pos;
                     let dist = length(toMouse);
                     
                     if (dist > 0.001) {
@@ -276,7 +344,7 @@ class ParticleSystem {
                     var output: VertexOutput;
                     output.position = vec4f(particle.xy, 0.0, 1.0);
                     let speed = length(particle.zw);
-                    output.color = vec4f(0.2 + speed / 4.0, 0.2, 0.2, 1.0);
+                    output.color = vec4f(0.2 + speed / 4.5, 0.2, 0.2, 1.0);
                     return output;
                 }
 
