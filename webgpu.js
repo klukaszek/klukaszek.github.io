@@ -344,7 +344,7 @@ class ParticleSystem {
                     var output: VertexOutput;
                     output.position = vec4f(particle.xy, 0.0, 1.0);
                     let speed = length(particle.zw);
-                    output.color = vec4f(0.2 + speed / 4.5, 0.2, 0.2, 1.0);
+                    output.color = vec4f(0.2 + speed / 5.0, 0.2, 0.2, 1.0);
                     return output;
                 }
 

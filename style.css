@@ -528,12 +528,12 @@ a:focus::after,
     border: 1px solid var(--subtle);
     border-radius: 5px;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(37, 34, 33, 0.5);
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .content-card:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(37, 34, 33, 0.8);
     border-color: var(--accent);
 }
 
@@ -658,7 +658,8 @@ a:focus::after,
         padding: 15px;
     }
 
-    #status-bar {
+    #status-bar span {
+        padding: 2px 5px;
         font-size: 0.4em;
     }
 
