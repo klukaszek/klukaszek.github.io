@@ -28,7 +28,6 @@ class ParticleSystem {
         this.render = this.render.bind(this);
         this.handleResize = this.handleResize.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     setupCanvas() {
@@ -266,13 +265,11 @@ class ParticleSystem {
     setupEventListeners() {
         window.addEventListener('resize', this.handleResize);
         document.addEventListener('mousemove', this.handleMouseMove);
-        document.addEventListener('keydown', this.handleKeyPress);
     }
 
     removeEventListeners() {
         window.removeEventListener('resize', this.handleResize);
         document.removeEventListener('mousemove', this.handleMouseMove);
-        document.removeEventListener('keydown', this.handleKeyPress);
     }
 
     handleResize() {
@@ -283,14 +280,6 @@ class ParticleSystem {
         const rect = this.canvas.getBoundingClientRect();
         this.mouseX = (e.clientX - rect.left) / rect.width * 2 - 1;
         this.mouseY = -((e.clientY - rect.top) / rect.height * 2 - 1);
-    }
-
-    handleKeyPress(e) {
-        if (e.key === 'x') {
-            this.cleanup();
-        } else if (e.key === 'r') {
-            this.restart();
-        }
     }
 
     updateCanvasSize() {

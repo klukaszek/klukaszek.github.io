@@ -409,6 +409,7 @@ a:focus::after,
     padding: 5px;
     display: flex;
     align-items: center;
+    z-index: 2;
 }
 
 #command-input span {
