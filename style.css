@@ -658,9 +658,14 @@ a:focus::after,
         padding: 15px;
     }
 
+    #status-bar {
+        /*display: none;*/
+        font-size: 0.3em;
+    }
+
     #status-bar span {
         padding: 2px 5px;
-        font-size: 0.4em;
+        /*font-size: 0.4em;*/
     }
 
     #content {
