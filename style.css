@@ -658,14 +658,15 @@ a:focus::after,
         padding: 15px;
     }
 
-    /*#status-bar {*/
-    /*    /*display: none;*/*/
-    /*}*/
-
-    #status-bar span {
-        padding: 2px 5px;
-        display: none;
+    #status-bar {
+        /*display: none;*/
+        font-size: 0.8em;
     }
+
+    /*#status-bar span {*/
+    /*    padding: 2px 5px;*/
+    /*    font-size: 0.4em;*/
+    /*}*/
 
     #content {
         padding: 20px;
