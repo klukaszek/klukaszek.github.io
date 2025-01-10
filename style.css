@@ -663,10 +663,10 @@ a:focus::after,
         font-size: 3pt;
     }
 
-    /*#status-bar span {*/
-    /*    padding: 2px 5px;*/
-    /*    font-size: 0.4em;*/
-    /*}*/
+    #status-bar span {
+        padding: 2px 5px;
+        /*font-size: 0.4em;*/
+    }
 
     #content {
         padding: 20px;
