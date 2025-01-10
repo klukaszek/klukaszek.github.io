@@ -665,7 +665,7 @@ a:focus::after,
 
     #status-bar span {
         padding: 2px 5px;
-        font-size: 7pt;
+        font-size: 6pt;
     }
 
     #content {
