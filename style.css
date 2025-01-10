@@ -660,7 +660,7 @@ a:focus::after,
 
     #status-bar {
         /*display: none;*/
-        font-size: 2pt;
+        font-size: 6pt;
     }
 
     #status-bar span {
