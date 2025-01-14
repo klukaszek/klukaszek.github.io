@@ -574,4 +574,8 @@ window.mobileCheck = function() {
 };
 
 const particleSystem = new ParticleSystem();
-particleSystem.initialize();
+particleSystem.initialize().catch(() => {
+    console.error('Failed to initialize WebGPU');
+    document.getElementById('main-header').getElementsByTagName('a')[0].textContent = 'WebGPU not supported! Visitors should enable WebGPU.';
+    particleSystem.cleanup();
+});
