@@ -54,6 +54,7 @@ class ParticleSystem {
 
     async initialize() {
         if (!navigator.gpu) {
+            document.getElementById('main-header').getElementsByTagName('a')[0].textContent = 'WebGPU not supported! Visitors should enable WebGPU.';
             throw new Error('WebGPU not supported');
         }
 
@@ -62,6 +63,7 @@ class ParticleSystem {
             forceFallbackAdapter: false,
         });
         if (!adapter) {
+            document.getElementById('main-header').getElementsByTagName('a')[0].textContent = 'WebGPU not supported! Visitors should enable WebGPU.';
             throw new Error('No adapter found');
         }
 
@@ -576,6 +578,5 @@ window.mobileCheck = function() {
 const particleSystem = new ParticleSystem();
 particleSystem.initialize().catch(() => {
     console.error('Failed to initialize WebGPU');
-    document.getElementById('main-header').getElementsByTagName('a')[0].textContent = 'WebGPU not supported! Visitors should enable WebGPU.';
     particleSystem.cleanup();
 });
