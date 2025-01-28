@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://kylelukaszek.com/</loc>
+        <loc>https://www.kylelukaszek.com/</loc>
         <lastmod>2024-12-28</lastmod>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://kylelukaszek.com/SDL3-WebGPU-Examples/</loc>
+        <loc>https://www.kylelukaszek.com/SDL3-WebGPU-Examples/</loc>
         <lastmod>2024-12-28</lastmod>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://kylelukaszek.com/tint-wasm/</loc>
+        <loc>https://www.kylelukaszek.com/tint-wasm/</loc>
         <lastmod>2024-12-28</lastmod>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://kylelukaszek.com/ColourSpaces/</loc>
+        <loc>https://www.kylelukaszek.com/ColourSpaces/</loc>
         <lastmod>2024-12-28</lastmod>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://kylelukaszek.com/Blog/</loc>
+        <loc>https://www.kylelukaszek.com/Blog/</loc>
         <lastmod>2024-12-28</lastmod>
         <priority>0.8</priority>
     </url>
