@@ -1,14 +1,16 @@
 <!-- projects.html -->
 <div class="projects-content">
 
-    <h1> My Projects<span class="cursor">|</span></h1>
+    <h1> Research Projects<span class="cursor">|</span></h1>
 
     <div class="project content-card">
         <h3>These Colours Do (Not) Exist</h3>
         <p>
-            These Colours Do (Not) Exist is my undergraduate thesis/research project exploring the field of colorimetry
+            My undergraduate thesis/research project exploring the field of colorimetry
             and developing a real-time 3D colour space visualization tool. Built using WebGPU and TypeScript, the tool
             is designed to be easily extensible and customizable for future improvements and additions.
+
+            <br><br>
 
             The renderer can visualize all ~16 million colours of the sRGB gamut in real-time (30-60 fps) on consumer
             hardware (tested on M3 MacBook). This capability is particularly valuable for research applications in
@@ -16,7 +18,9 @@
             colour space. MATLAB is the only modern solution to this problem, however their browser notebooks rely on
             WebGL for rendering which limits performance due to larger overhead and lack of compute shaders.
 
-            The visualization system generates colours through a GPU compute shader and renders them using instanced
+            <br><br>
+
+            The visualization system generates colours through a compute shader and renders them using instanced
             particles. Additionally, the tool features a PPM image importer that can map image colours into the 3D
             colour space for analysis.
         </p>
@@ -24,8 +28,58 @@
         <p><a href="https://kylelukaszek.xyz/ColourSpaces/" target="_blank"><strong>Try it! (WebGPU
                     Required)</strong></a>
         <p><a href="./static/pdfs/These_Colours_Do_Not_Exist.pdf" target="_blank"><strong>My Paper</strong></a></p>
+
+        <div class="related-skills">
+            <h5>Related Skills:</h5>
+            <div class="skills">
+                <ul>
+                    <li>Compute Shaders/Kernels</li>
+                    <li>Graphics Programming</li>
+                    <li>Parallel Computing</li>
+                    <li>TypeScript</li>
+                    <li>WebGPU</li>
+                    <li>WGSL</li>
+                </ul>
+            </div>
+        </div>
         </p>
     </div>
+
+    <div class="project content-card">
+        <h3>Comparing The Performance of 3D Classification Models on Various Datasets</h3>
+        <p>
+            My friend Luke and I spent a month researching, implementing, and testing various 3D classification models on voxelized
+            3D models. We wanted to see how well 3D classification models could generalize to different datasets and how 
+            accurately we could tune older models to perform better. As a result, we implemented our own novel CNN model
+            for binary voxel classification that showed promising results for mobile applications.
+
+            <br><br>
+
+            We evaluated and improved various 3D classification models using test datasets
+            such as ShapeNet, ModelNet40, and Toys4K. This was our final project for CIS*4780 Computational Intelligence.
+        </p>
+        <p><a href="https://github.com/klukaszek/3D-Classification" target="_blank"><strong>GitHub</strong></a></p>
+        <p><a href="https://github.com/klukaszek/3D-Classification/blob/main/CIS4780%20Final%20Report.pdf"
+                target="_blank"><strong>Report</strong></a></p>
+        <div class="related-skills">
+            <h5>Related Skills:</h5>
+            <div class="skills">
+                <ul>
+                    <li>Machine Learning</li>
+                    <li>Geometry Processing</li>
+                    <li>Python</li>
+                    <li>PyTorch</li>
+                    <li>CUDA</li>
+                    <li>NumPy</li>
+                    <li>Pandas</li>
+                    <li>SciKit</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h1> Personal Projects<span class="cursor">|</span></h1>
+
     <div class="project content-card">
         <h3>SDL3GPU WebGPU Backend</h3>
         <p>
@@ -64,7 +118,7 @@
         <p>
             Tint-WASM is a reverse engineered *as light as can be* WebAssembly runtime
             for Google's Tint (WGSL) compiler. It also includes access to the entirety
-            of SPIRV-Tools so we can also target SPVASM. Currently Tint-WASM supports
+            of SPIRV-Tools so we can also target SPVASM. Tint-WASM currently supports
             SPIR-V, SPIR-V ASM, and WGSL cross-compilation. Tint-WASM can be used in two
             different ways: as a standalone static library being used from the ground
             up, or the WASM module with C++ API that can be used in the browser. I plan on
@@ -109,7 +163,9 @@
             and generate buffers, textures, and pipelines based on shader code.
         </p>
         <p><a href="https://github.com/klukaszek/Nano" target="_blank"><strong>GitHub</strong></a></p>
-        <p><a href="https://kylelukaszek.xyz/Nano/triangle_demo/triangle_demo.html" target="_blank"><strong>Demo (WebGPU
+        <p><a href="https://kylelukaszek.xyz/Nano/triangle_demo/triangle_demo.html" target="_blank"><strong>Triangle Demo (WebGPU
+                    Required)</strong></a></p>
+        <p><a href="https://kylelukaszek.xyz/Nano/wave_demo/wave_demo.html" target="_blank"><strong>Oscillation Demo (WebGPU
                     Required)</strong></a></p>
         <div class="related-skills">
             <h5>Related Skills:</h5>
@@ -129,36 +185,10 @@
     </div>
 
     <div class="project content-card">
-        <h3>Comparing The Performance of 3D Classification Models on Various Datasets</h3>
-        <p>
-            Luke and I evaluated and improved various 3D classification models using test datasets
-            such as ShapeNet, ModelNet40, and Toys4K. Final project for CIS*4780 Computational Intelligence.
-        </p>
-        <p><a href="https://github.com/klukaszek/3D-Classification" target="_blank"><strong>GitHub</strong></a></p>
-        <p><a href="https://github.com/klukaszek/3D-Classification/blob/main/CIS4780%20Final%20Report.pdf"
-                target="_blank"><strong>Report</strong></a></p>
-        <div class="related-skills">
-            <h5>Related Skills:</h5>
-            <div class="skills">
-                <ul>
-                    <li>Machine Learning</li>
-                    <li>Geometry Processing</li>
-                    <li>Python</li>
-                    <li>PyTorch</li>
-                    <li>CUDA</li>
-                    <li>NumPy</li>
-                    <li>Pandas</li>
-                    <li>SciKit</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="project content-card">
         <h3>Sprite Fight</h3>
         <p>
             2.5D arena fighting game made using Unity over the span of 2 weeks. Learned to
-            write shaders for post-processing. Final project for CIS4820.
+            write shaders for post-processing. Final project for CIS*4820 Game Programming.
         </p>
         <p><a href="https://github.com/klukaszek/CIS4820-Sprite-Fight" target="_blank"><strong>GitHub</strong></a>
         </p>
