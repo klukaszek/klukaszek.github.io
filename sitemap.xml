@@ -3,12 +3,7 @@
     <url>
         <loc>https://kylelukaszek.com/</loc>
         <lastmod>2024-12-28</lastmod>
-        <priority>0.8</priority>
-        </url>
-    <url>
-        <loc>https://kylelukaszek.xyz/</loc>
-        <lastmod>2024-12-28</lastmod>
-        <priority>0.8</priority>
+        <priority>1.0</priority>
     </url>
     <url>
         <loc>https://kylelukaszek.com/SDL3-WebGPU-Examples/</loc>
@@ -28,6 +23,6 @@
     <url>
         <loc>https://kylelukaszek.com/Blog/</loc>
         <lastmod>2024-12-28</lastmod>
-        <priority>1.0</priority>
+        <priority>0.8</priority>
     </url>
 </urlset>
