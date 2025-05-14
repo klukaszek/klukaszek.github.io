@@ -1,34 +1,40 @@
 <div class="projects-content">
-    <h1>Research Experience<span class="cursor">|</span></h1>
+    <h1>Research Experience</h1>
     <div class="work-experience">
         <div class="job content-card">
-            <h3>Colour & Light HCI Research Assistant</h3>
+            <h3>Research Assistant, Human-Computer Interaction</h3>
             <h4>University of Guelph</h4>
             <p class="job-duration">January 2024 - January 2025</p>
             <ul>
-                <li>Research assistant helping develop a model to better understand Situational-Visual-Impairments in
-                    direct sunlight.
                 <li>
-                <li>
-                    Developed a Unix compatible JETI API for the JETI Spectraval 1501 spectroradiometer using the
-                    SPECFIRM. Bluetooth is implemented for both Linux and macOS. Our spectroradiometer was originally
-                    only compatible with Windows so this was a big step for our research team.
+                    Developed a cross-platform C driver and CLI tool for the JETI
+                    Spectraval 1501, replacing a Windows-only FTDI driver with a
+                    low-latency scriptable interface.
                 </li>
                 <li>
-                    Developed an IOS app to assist in testing different colours. It uses IOS SensorKit to measure the
-                    Lux at the position of a display we are testing and makes sure the display is at the correct
-                    brightness.
+                    Optimized serial read/write routines and built tensor-style
+                    polling strategies for consistent spectroradiometric data
+                    acquisition.
                 </li>
                 <li>
-                    The initial paper was accepted and featured at <a
-                        href="https://graphicsinterface.org/conference/2024/">Graphics Interface 2024</a>.
+                    Reduced latency and setup time by over 50%, enabling seamless
+                    integration into HCI and perceptual testing pipelines.
                 </li>
                 <li>
+                    Integrated iOS SensorKit with custom ambient light models for
+                    iOS-based perceptual validation.
+                </li>
+                <li>
+                    Co-authored a peer-reviewed paper accepted to Graphics Interface 2024.
                     The paper can be read here:
                     <ul>
-                        <li><a href="https://dl.acm.org/doi/10.1145/3670947.3670959">ACM Digital Library</a></li>
+                        <li><a href="https://dl.acm.org/doi/10.1145/3670947.3670959"
+                               target="_blank"
+                               rel="noopener noreferrer">ACM Digital Library</a></li>
                         <li>
-                            <a href="https://openreview.net/pdf/ebd1faa83f27bacdfb491123a385535af30520f8.pdf">OpenReview
+                            <a href="https://openreview.net/pdf/ebd1faa83f27bacdfb491123a385535af30520f8.pdf"
+                               target="_blank"
+                               rel="noopener noreferrer">OpenReview
                                 (Free)</a>
                         </li>
                     </ul>
@@ -44,7 +50,7 @@
                     <li>Swift</li>
                     <li>SwiftUI</li>
                     <li>UIKit</li>
-                    <li>IOS SensorKit</li>
+                    <li>iOS SensorKit</li>
                     <li>macOS System Programming</li>
                     <li>LINUX System Programming</li>
                     <li>Bluetooth Driver Development</li>
@@ -55,31 +61,29 @@
         </div>
 
         <div class="job content-card">
-            <h3>NLP & Machine Learning Research Assistant</h3>
+            <h3>Research Assistant, Machine Learning</h3>
             <h4>University of Guelph</h4>
-            <p class="job-duration">May 2023 - August 2023</p>
+            <p class="job-duration">May 2023 - September 2023</p>
             <ul>
                 <li>
-                    Research assistant working with the University of Guelph and Toronto Metropolitan
-                    University to determine characteristics of Twitter users that repeatedly engaged in hate speech.
+                    Implemented and optimized low-level CUDA kernels for NLP
+                    inference and data preprocessing tasks on large-scale Twitter
+                    corpora.
                 </li>
                 <li>
-                    Developed a machine learning model to predict and determine how likely a user might be to post hate
-                    speech based on several metadata characteristics and existing post history.
+                    Engineered multiple high-throughput ML/IR pipelines in PyTorch,
+                    SciKit, and C/CUDA, reducing data processing time by over 3×.
                 </li>
                 <li>
-                    Developed CPU parallelized pipelines to perform our taxing ML tasks using subpar hardware.
+                    Performed performance profiling with NSight and integrated
+                    batch-level optimizations.
                 </li>
                 <li>
-                    Made use of XGBoost to build binary classifiers for the data and performed various forms of feature
-                    selection useful for developing our model. These features include readbillity
-                    scores, sentiment scores, topical scoring, user information, communication style, and much more.
-                </li>
-                <li>
-                    The paper can be read here:
-                    <ul>
-                        <li><a href="https://doi.org/10.1109/TCSS.2024.3359010">IEEExplore</a></li>
-                    </ul>
+                    Results later supported an <a
+                        href="https://ieeexplore.ieee.org/abstract/document/10433527"
+                        target="_blank"
+                        rel="noopener noreferrer">IEEE T-CSS publication</a>
+                    on online hate detection.
                 </li>
             </ul>
             <div class="related-skills">
@@ -89,6 +93,7 @@
                     <li>Quantitative Analysis</li>
                     <li>MPI Parallel Computing</li>
                     <li>Natural Language Processing</li>
+                    <li>C CUDA</li>
                     <li>Python</li>
                     <li>R</li>
                     <li>NLTK</li>
@@ -100,24 +105,30 @@
                     <li>TensorFlow</li>
                     <li>XGBoost</li>
                     <li>BERT</li>
-                    <li>Word2Vec</li>
-                    <li>Doc2Vec</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <h1>Teaching Assistant Experience<span class="cursor">|</span></h1>
+    <h1>Teaching Assistant Experience</h1>
     <div class="work-experience">
         <div class="job content-card">
-            <h3>Assisting with CIS*2750 - Software Systems Development and Integration</h3>
+            <h3>Teaching Assistant, CIS*2750</h3>
             <h4>University of Guelph</h4>
-            <p class="job-duration">January 2025 - Present</p>
+            <p class="job-duration">January 2025 - April 2025</p>
             <ul>
-                <li>Responsible for operating office hours to assist students with any questions they might have about
-                    the binary compilation process, the C language toolchain, Python/CPython, and SQL.</li>
-                <li>Developing testing harnesses for verifying student assignments.</li>
-                <li>Grading assignments and providing feedback to students.</li>
+                <li>
+                    Supported instruction in C systems development, SQL, and FFI
+                    integration for TUI development.
+                </li>
+                <li>
+                    Mentored a class of 300+ undergraduate students in
+                    intermediate-advanced programming concepts.
+                </li>
+                <li>
+                    Graded and provided feedback to students based on their
+                    submitted coursework.
+                </li>
             </ul>
             <div class="related-skills">
                 <h5>Related Skills:</h5>
